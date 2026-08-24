@@ -2,3 +2,7 @@ torch
 pandas
 numpy
 scikit-learn
+scipy
+xgboost
+lightgbm
+joblib
