@@ -354,8 +354,8 @@ def mixup_criterion(criterion, pred, y_a, y_b, lam):
     return lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)""")
 
 add_md("## 6. Train the CNN with GroupKFold (5 folds)")
-add_code("""CNN_EPOCHS = 55
-CNN_PATIENCE = 12
+add_code("""CNN_EPOCHS = 32
+CNN_PATIENCE = 8
 BATCH_SIZE = 256
 
 class_counts = np.bincount(y_train)
@@ -365,9 +365,10 @@ alpha = (alpha / alpha.sum()).to(DEVICE)
 oof_cnn_probs = np.zeros((len(train_df), 4), dtype=np.float32)
 cnn_models_state = []
 cnn_fold_f1 = []
+_cnn_start = time.time()
 
 for fold, (tr_idx, va_idx) in enumerate(FOLD_SPLITS):
-    print(f"\\n=== CNN fold {fold} ===")
+    print(f"\\n=== CNN fold {fold} === ({time.time() - _cnn_start:.0f}s elapsed so far)")
     train_ds = ECGDataset(X_sig_train[tr_idx], X_meta_train[tr_idx], y_train[tr_idx])
     val_ds = ECGDataset(X_sig_train[va_idx], X_meta_train[va_idx], y_train[va_idx])
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
@@ -430,7 +431,8 @@ for fold, (tr_idx, va_idx) in enumerate(FOLD_SPLITS):
     print(f"CNN fold {fold} best macro F1: {best_f1:.4f}")
 
 cnn_oof_f1 = f1_score(y_train, np.argmax(oof_cnn_probs, axis=1), average='macro')
-print(f"\\nCNN block-CV OOF macro F1: {cnn_oof_f1:.4f} (fold mean {np.mean(cnn_fold_f1):.4f})")
+print(f"\\nCNN training took {time.time() - _cnn_start:.0f}s total")
+print(f"CNN block-CV OOF macro F1: {cnn_oof_f1:.4f} (fold mean {np.mean(cnn_fold_f1):.4f})")
 print(classification_report(y_train, np.argmax(oof_cnn_probs, axis=1), digits=4))""")
 
 add_md("## 7. Train XGBoost on the same folds")
@@ -439,7 +441,7 @@ add_code("""xgb_params = dict(
     max_depth=5, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8,
     reg_lambda=2.0, reg_alpha=0.5,
     tree_method='hist', device='cuda' if DEVICE.type == 'cuda' else 'cpu',
-    random_state=SEED, n_estimators=1000, early_stopping_rounds=50,
+    random_state=SEED, n_estimators=600, early_stopping_rounds=40,
 )
 
 oof_xgb_probs = np.zeros((len(train_df), 4))
