@@ -1,0 +1,44 @@
+2026-08-24 05:30:56,744 - Using device: cuda
+2026-08-24 05:30:57,261 - Starting training...
+2026-08-24 05:30:58,301 - Epoch 1/30 - Train Loss: 0.0068 - Val Loss: 0.0034 - Val Macro F1: 0.7351
+2026-08-24 05:30:58,302 -  -> Saved new best model (F1: 0.7351)
+2026-08-24 05:30:58,984 - Epoch 2/30 - Train Loss: 0.0030 - Val Loss: 0.0027 - Val Macro F1: 0.7048
+2026-08-24 05:30:59,664 - Epoch 3/30 - Train Loss: 0.0025 - Val Loss: 0.0021 - Val Macro F1: 0.7559
+2026-08-24 05:30:59,665 -  -> Saved new best model (F1: 0.7559)
+2026-08-24 05:31:00,348 - Epoch 4/30 - Train Loss: 0.0021 - Val Loss: 0.0019 - Val Macro F1: 0.7638
+2026-08-24 05:31:00,354 -  -> Saved new best model (F1: 0.7638)
+2026-08-24 05:31:01,102 - Epoch 5/30 - Train Loss: 0.0018 - Val Loss: 0.0021 - Val Macro F1: 0.7645
+2026-08-24 05:31:01,104 -  -> Saved new best model (F1: 0.7645)
+2026-08-24 05:31:01,789 - Epoch 6/30 - Train Loss: 0.0018 - Val Loss: 0.0017 - Val Macro F1: 0.8021
+2026-08-24 05:31:01,791 -  -> Saved new best model (F1: 0.8021)
+2026-08-24 05:31:02,470 - Epoch 7/30 - Train Loss: 0.0015 - Val Loss: 0.0016 - Val Macro F1: 0.7891
+2026-08-24 05:31:03,157 - Epoch 8/30 - Train Loss: 0.0013 - Val Loss: 0.0017 - Val Macro F1: 0.8205
+2026-08-24 05:31:03,159 -  -> Saved new best model (F1: 0.8205)
+2026-08-24 05:31:03,903 - Epoch 9/30 - Train Loss: 0.0013 - Val Loss: 0.0020 - Val Macro F1: 0.7956
+2026-08-24 05:31:04,621 - Epoch 10/30 - Train Loss: 0.0011 - Val Loss: 0.0017 - Val Macro F1: 0.8249
+2026-08-24 05:31:04,622 -  -> Saved new best model (F1: 0.8249)
+2026-08-24 05:31:05,300 - Epoch 11/30 - Train Loss: 0.0009 - Val Loss: 0.0016 - Val Macro F1: 0.8150
+2026-08-24 05:31:05,984 - Epoch 12/30 - Train Loss: 0.0008 - Val Loss: 0.0016 - Val Macro F1: 0.8156
+2026-08-24 05:31:06,673 - Epoch 13/30 - Train Loss: 0.0008 - Val Loss: 0.0016 - Val Macro F1: 0.7903
+2026-08-24 05:31:07,424 - Epoch 14/30 - Train Loss: 0.0009 - Val Loss: 0.0017 - Val Macro F1: 0.8249
+2026-08-24 05:31:08,122 - Epoch 15/30 - Train Loss: 0.0007 - Val Loss: 0.0022 - Val Macro F1: 0.8314
+2026-08-24 05:31:08,123 -  -> Saved new best model (F1: 0.8314)
+2026-08-24 05:31:08,805 - Epoch 16/30 - Train Loss: 0.0005 - Val Loss: 0.0022 - Val Macro F1: 0.8528
+2026-08-24 05:31:08,806 -  -> Saved new best model (F1: 0.8528)
+2026-08-24 05:31:09,493 - Epoch 17/30 - Train Loss: 0.0005 - Val Loss: 0.0026 - Val Macro F1: 0.8586
+2026-08-24 05:31:09,495 -  -> Saved new best model (F1: 0.8586)
+2026-08-24 05:31:10,238 - Epoch 18/30 - Train Loss: 0.0005 - Val Loss: 0.0026 - Val Macro F1: 0.8528
+2026-08-24 05:31:10,927 - Epoch 19/30 - Train Loss: 0.0004 - Val Loss: 0.0026 - Val Macro F1: 0.8595
+2026-08-24 05:31:10,929 -  -> Saved new best model (F1: 0.8595)
+2026-08-24 05:31:11,612 - Epoch 20/30 - Train Loss: 0.0004 - Val Loss: 0.0032 - Val Macro F1: 0.9069
+2026-08-24 05:31:11,613 -  -> Saved new best model (F1: 0.9069)
+2026-08-24 05:31:12,304 - Epoch 21/30 - Train Loss: 0.0004 - Val Loss: 0.0027 - Val Macro F1: 0.8696
+2026-08-24 05:31:12,990 - Epoch 22/30 - Train Loss: 0.0003 - Val Loss: 0.0028 - Val Macro F1: 0.8898
+2026-08-24 05:31:13,739 - Epoch 23/30 - Train Loss: 0.0003 - Val Loss: 0.0033 - Val Macro F1: 0.8796
+2026-08-24 05:31:14,425 - Epoch 24/30 - Train Loss: 0.0003 - Val Loss: 0.0033 - Val Macro F1: 0.8962
+2026-08-24 05:31:15,105 - Epoch 25/30 - Train Loss: 0.0003 - Val Loss: 0.0035 - Val Macro F1: 0.8917
+2026-08-24 05:31:15,785 - Epoch 26/30 - Train Loss: 0.0002 - Val Loss: 0.0034 - Val Macro F1: 0.8927
+2026-08-24 05:31:16,591 - Epoch 27/30 - Train Loss: 0.0002 - Val Loss: 0.0037 - Val Macro F1: 0.9009
+2026-08-24 05:31:17,338 - Epoch 28/30 - Train Loss: 0.0002 - Val Loss: 0.0036 - Val Macro F1: 0.8981
+2026-08-24 05:31:18,087 - Epoch 29/30 - Train Loss: 0.0002 - Val Loss: 0.0036 - Val Macro F1: 0.8974
+2026-08-24 05:31:18,841 - Epoch 30/30 - Train Loss: 0.0002 - Val Loss: 0.0036 - Val Macro F1: 0.9001
