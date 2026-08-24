@@ -1,0 +1,79 @@
+{
+  "hostname": "Abhijith_Sriram",
+  "timestamp": "20260824_105146",
+  "n_rows": 71748,
+  "n_test_rows": 68914,
+  "n_pseudo_groups": 47683,
+  "group_size_mean": 1.5046872050835727,
+  "group_size_max": 38,
+  "n_singleton_groups": 38198,
+  "mean_group_label_purity": 0.9995388217140081,
+  "train_internal_nn_corr_mean": 0.9694172739982605,
+  "train_internal_nn_same_label_frac": 0.9834699225065507,
+  "test_to_train_nn_corr_mean": 0.9310173988342285,
+  "class_conditioned_baseline": {
+    "0": {
+      "random_pair_corr_mean": 0.29708001017570496,
+      "nn_corr_mean": 0.9655646681785583,
+      "nn_corr_median": 0.9855958819389343
+    },
+    "1": {
+      "random_pair_corr_mean": 0.5278666019439697,
+      "nn_corr_mean": 0.9710543155670166,
+      "nn_corr_median": 0.9867048263549805
+    },
+    "2": {
+      "random_pair_corr_mean": 0.19144722819328308,
+      "nn_corr_mean": 0.9768860340118408,
+      "nn_corr_median": 0.9934146404266357
+    },
+    "3": {
+      "random_pair_corr_mean": 0.3836117386817932,
+      "nn_corr_mean": 0.9678056240081787,
+      "nn_corr_median": 0.9872006773948669
+    }
+  },
+  "random_stratkfold_macro_f1": 0.9139499461836385,
+  "random_stratkfold_fold_f1": [
+    0.9180059231623094,
+    0.9209383105771393,
+    0.9024994771775103,
+    0.906260830364334,
+    0.9219114764017573
+  ],
+  "random_stratkfold_per_class_f1": {
+    "0": 0.9920746957150003,
+    "1": 0.9539318023660404,
+    "2": 0.9863516712013626,
+    "3": 0.723441615452151
+  },
+  "grouped_kfold_macro_f1": 0.9105588465882481,
+  "grouped_kfold_fold_f1": [
+    0.8909359664390581,
+    0.8891616939541818,
+    0.9306342862993905,
+    0.9021646864672277,
+    0.9205089871185976
+  ],
+  "grouped_kfold_per_class_f1": {
+    "0": 0.991549170484366,
+    "1": 0.9530425118088358,
+    "2": 0.9862226055419182,
+    "3": 0.7114210985178727
+  },
+  "known_kaggle_public_lb": {
+    "deepecgnet": 0.513,
+    "xgb": 0.516
+  },
+  "verdict_leakage_confirmed": false,
+  "args": {
+    "train_path": null,
+    "test_path": null,
+    "corr_threshold": 0.98,
+    "rr_threshold": 0.06,
+    "n_estimators": 400,
+    "chunk_size": null,
+    "n_splits": 5,
+    "max_rows": null
+  }
+}

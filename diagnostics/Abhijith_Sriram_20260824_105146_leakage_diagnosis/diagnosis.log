@@ -1,0 +1,91 @@
+2026-08-24 10:51:46,895 - ======================================================================
+2026-08-24 10:51:46,895 - ECG COMPETITION: CV-vs-LEADERBOARD LEAKAGE DIAGNOSIS
+2026-08-24 10:51:46,895 - ======================================================================
+2026-08-24 10:51:46,895 - Args: {'train_path': None, 'test_path': None, 'corr_threshold': 0.98, 'rr_threshold': 0.06, 'n_estimators': 400, 'chunk_size': None, 'n_splits': 5, 'max_rows': None}
+2026-08-24 10:51:46,896 - train.csv: ../nppe-2-t-2-26-ecg-heartbeat-arrhythmia-classification/nppe2_dataset/train.csv
+2026-08-24 10:51:46,896 - test.csv:  ../nppe-2-t-2-26-ecg-heartbeat-arrhythmia-classification/nppe2_dataset/test.csv
+2026-08-24 10:51:51,585 - train shape: (71748, 255) | test shape: (68914, 254)
+2026-08-24 10:51:53,564 - Device for nearest-neighbor search: cuda (NVIDIA GeForce RTX 4060 Laptop GPU)
+2026-08-24 10:51:53,564 - ----------------------------------------------------------------------
+2026-08-24 10:51:53,564 - STEP 1: Train-internal nearest-neighbor correlation
+2026-08-24 10:51:53,564 - ----------------------------------------------------------------------
+2026-08-24 10:51:53,830 -   [train-internal NN] 4000/71748 (5.6%) - 0.2s elapsed
+2026-08-24 10:51:54,068 -   [train-internal NN] 24000/71748 (33.5%) - 0.4s elapsed
+2026-08-24 10:51:54,308 -   [train-internal NN] 44000/71748 (61.3%) - 0.7s elapsed
+2026-08-24 10:51:54,530 -   [train-internal NN] 64000/71748 (89.2%) - 0.9s elapsed
+2026-08-24 10:51:54,625 -   [train-internal NN] 71748/71748 (100.0%) - 1.0s elapsed
+2026-08-24 10:51:54,628 - Overall NN correlation: mean=0.9694 median=0.9884
+2026-08-24 10:51:54,628 - Fraction of NN pairs sharing the same label: 0.9835
+2026-08-24 10:51:54,629 -   fraction of rows with NN corr > 0.9: 0.9242
+2026-08-24 10:51:54,629 -   fraction of rows with NN corr > 0.95: 0.8120
+2026-08-24 10:51:54,629 -   fraction of rows with NN corr > 0.98: 0.6191
+2026-08-24 10:51:54,630 -   fraction of rows with NN corr > 0.99: 0.4647
+2026-08-24 10:51:54,630 -   fraction of rows with NN corr > 0.995: 0.3092
+2026-08-24 10:51:54,630 - Random same-class pair correlation baseline (rules out 'they just look alike'):
+2026-08-24 10:51:54,656 -   class 0: random-pair mean=0.2971 | NN mean=0.9656 median=0.9856  (gap = 0.6685)
+2026-08-24 10:51:54,678 -   class 1: random-pair mean=0.5279 | NN mean=0.9711 median=0.9867  (gap = 0.4432)
+2026-08-24 10:51:54,701 -   class 2: random-pair mean=0.1914 | NN mean=0.9769 median=0.9934  (gap = 0.7854)
+2026-08-24 10:51:54,724 -   class 3: random-pair mean=0.3836 | NN mean=0.9678 median=0.9872  (gap = 0.5842)
+2026-08-24 10:51:54,725 - ----------------------------------------------------------------------
+2026-08-24 10:51:54,725 - STEP 2: Test-set nearest-neighbor into train (is test 'seen' by train at all?)
+2026-08-24 10:51:54,725 - ----------------------------------------------------------------------
+2026-08-24 10:51:54,790 -   [test->train NN] 4000/68914 (5.8%) - 0.0s elapsed
+2026-08-24 10:51:55,027 -   [test->train NN] 24000/68914 (34.8%) - 0.3s elapsed
+2026-08-24 10:51:55,245 -   [test->train NN] 44000/68914 (63.8%) - 0.5s elapsed
+2026-08-24 10:51:55,462 -   [test->train NN] 64000/68914 (92.9%) - 0.7s elapsed
+2026-08-24 10:51:55,518 -   [test->train NN] 68914/68914 (100.0%) - 0.8s elapsed
+2026-08-24 10:51:55,520 - Test->train NN correlation: mean=0.9310 median=0.9441
+2026-08-24 10:51:55,520 -   fraction of TEST rows with a TRAIN neighbor corr > 0.9: 0.7818
+2026-08-24 10:51:55,521 -   fraction of TEST rows with a TRAIN neighbor corr > 0.95: 0.4520
+2026-08-24 10:51:55,521 -   fraction of TEST rows with a TRAIN neighbor corr > 0.98: 0.0514
+2026-08-24 10:51:55,521 -   fraction of TEST rows with a TRAIN neighbor corr > 0.99: 0.0004
+2026-08-24 10:51:55,521 -   fraction of TEST rows with a TRAIN neighbor corr > 0.995: 0.0001
+2026-08-24 10:51:55,521 - Compare to STEP 1's train-internal fractions above -- if test rows have far fewer/weaker
+2026-08-24 10:51:55,521 - near-duplicates in train than train rows have among themselves, that means test beats
+2026-08-24 10:51:55,544 - come from sources (patients/recordings) not represented in train at all.
+2026-08-24 10:51:55,544 - ----------------------------------------------------------------------
+2026-08-24 10:51:55,545 - STEP 3: Building pseudo-recording groups (signal match + RR-interval match)
+2026-08-24 10:51:55,545 - ----------------------------------------------------------------------
+2026-08-24 10:51:55,547 - Edges formed (corr > 0.98 AND RR match < 0.06s): 31471 / 71748 (43.9%)
+2026-08-24 10:51:55,613 - Number of pseudo-groups: 47683
+2026-08-24 10:51:55,625 - Group size distribution: min=1 median=1.0 mean=1.50 max=38
+2026-08-24 10:51:55,626 - Singleton groups (no near-duplicate found): 38198 (80.1% of groups, 53.2% of rows)
+2026-08-24 10:52:05,111 - Mean within-group label purity: 0.9995 (1.0 = every beat in a pseudo-group shares the same label)
+2026-08-24 10:52:05,311 - ----------------------------------------------------------------------
+2026-08-24 10:52:05,311 - STEP 4: Extracting features for the XGBoost sanity-check model
+2026-08-24 10:52:05,311 - ----------------------------------------------------------------------
+2026-08-24 10:52:07,073 - Feature extraction done in 1.8s. Shape: (71748, 33)
+2026-08-24 10:52:07,141 - XGBoost params: {'objective': 'multi:softprob', 'num_class': 4, 'eval_metric': 'mlogloss', 'max_depth': 6, 'learning_rate': 0.08, 'subsample': 0.8, 'colsample_bytree': 0.8, 'tree_method': 'hist', 'device': 'cuda', 'random_state': 42, 'n_estimators': 400}
+2026-08-24 10:52:07,141 - ----------------------------------------------------------------------
+2026-08-24 10:52:07,141 - STEP 5: Reproducing the ORIGINAL random StratifiedKFold CV (as used in both submissions)
+2026-08-24 10:52:07,141 - ----------------------------------------------------------------------
+2026-08-24 10:52:14,261 -   [RANDOM StratifiedKFold] fold 0: macro F1 = 0.9180  (val size=14350)
+2026-08-24 10:52:20,357 -   [RANDOM StratifiedKFold] fold 1: macro F1 = 0.9209  (val size=14350)
+2026-08-24 10:52:26,235 -   [RANDOM StratifiedKFold] fold 2: macro F1 = 0.9025  (val size=14350)
+2026-08-24 10:52:32,336 -   [RANDOM StratifiedKFold] fold 3: macro F1 = 0.9063  (val size=14349)
+2026-08-24 10:52:38,151 -   [RANDOM StratifiedKFold] fold 4: macro F1 = 0.9219  (val size=14349)
+2026-08-24 10:52:38,159 - [RANDOM StratifiedKFold] OOF macro F1 = 0.9139  (fold mean=0.9139 +/- 0.0080)
+2026-08-24 10:52:38,207 - ----------------------------------------------------------------------
+2026-08-24 10:52:38,207 - STEP 6: Corrected GroupKFold CV (grouped by pseudo-recording)
+2026-08-24 10:52:38,207 - ----------------------------------------------------------------------
+2026-08-24 10:52:44,071 -   [GROUPED KFold (pseudo-recording-aware)] fold 0: macro F1 = 0.8909  (val size=14350)
+2026-08-24 10:52:50,130 -   [GROUPED KFold (pseudo-recording-aware)] fold 1: macro F1 = 0.8892  (val size=14350)
+2026-08-24 10:52:55,891 -   [GROUPED KFold (pseudo-recording-aware)] fold 2: macro F1 = 0.9306  (val size=14350)
+2026-08-24 10:53:01,716 -   [GROUPED KFold (pseudo-recording-aware)] fold 3: macro F1 = 0.9022  (val size=14349)
+2026-08-24 10:53:07,651 -   [GROUPED KFold (pseudo-recording-aware)] fold 4: macro F1 = 0.9205  (val size=14349)
+2026-08-24 10:53:07,660 - [GROUPED KFold (pseudo-recording-aware)] OOF macro F1 = 0.9106  (fold mean=0.9067 +/- 0.0164)
+2026-08-24 10:53:07,719 - ======================================================================
+2026-08-24 10:53:07,719 - SUMMARY
+2026-08-24 10:53:07,719 - ======================================================================
+2026-08-24 10:53:07,719 - Rows: 71748 | Pseudo-groups: 47683 | Mean group size: 1.50
+2026-08-24 10:53:07,719 - RANDOM StratifiedKFold macro F1 (reproduces submitted CV methodology): 0.9139
+2026-08-24 10:53:07,720 - GROUPED KFold macro F1 (pseudo-recording-aware, closer to real test):  0.9106
+2026-08-24 10:53:07,720 - Gap: 0.0034
+2026-08-24 10:53:07,720 - Known Kaggle public LB scores -> deepecgnet: 0.513 | xgb: 0.516
+2026-08-24 10:53:07,720 - 
+2026-08-24 10:53:07,720 - VERDICT: Grouped CV did not collapse as much as expected. Near-duplicate-beat
+2026-08-24 10:53:07,720 - leakage may not be the full explanation -- also check label mapping consistency,
+2026-08-24 10:53:07,720 - feature/scaler consistency between train and test, and per-class distribution
+2026-08-24 10:53:07,720 - shift (see STEP 2 test->train NN stats above).
+2026-08-24 10:53:07,749 - Saved diagnosis.log, summary.json, pseudo_groups.csv to diagnostics/Abhijith_Sriram_20260824_105146_leakage_diagnosis/
+2026-08-24 10:53:07,749 - Commit and push this diagnostics/ folder so it can be pulled and reviewed.
