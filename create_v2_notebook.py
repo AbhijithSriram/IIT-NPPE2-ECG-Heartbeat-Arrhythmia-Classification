@@ -54,14 +54,19 @@ attainable macro F1 at 0.75 — below scores already on the leaderboard, so Fusi
 present and learnable.""")
 add_code("""# ---- main knob: estimated test-set class prevalence ----
 # [Normal, SVEB, VEB, Fusion]
-TARGET_PRIOR = [0.882, 0.024, 0.088, 0.006]
+# Updated from the previous run's BBSE estimate [0.8866, 0.0399, 0.0693, 0.0042],
+# blended toward natural prevalence (BBSE tends to overshoot SVEB here).
+TARGET_PRIOR = [0.884, 0.032, 0.078, 0.006]
 
-# 'prior_match' : offsets chosen so predicted counts match TARGET_PRIOR (recommended)
-# 'tuned'       : robust offset search across candidate priors (what scored 0.611)
+# 'tuned'       : robust offset search across candidate priors  <-- won on the full run,
+#                 beating prior_match under all three priors (0.686/0.684/0.688)
+# 'prior_match' : offsets chosen so predicted counts match TARGET_PRIOR
 # 'blend'       : average of the two offset vectors
-DECISION_MODE = 'prior_match'
+DECISION_MODE = 'tuned'
 
-USE_LIGHTGBM = True
+# LightGBM took 203s on the last full run and the OOF-tuned blend weight came out 1.0,
+# i.e. it was discarded entirely. Off by default to keep the run ~2 min.
+USE_LIGHTGBM = False
 SEED = 42""")
 
 add_md("## 0. Imports")
@@ -407,7 +412,23 @@ for k in PRIORS:
     print(f"{k:<9} {sc(np.zeros(4),k):>9.4f} {sc(b_match,k):>9.4f} {sc(b_tuned,k):>9.4f}")
 print("\\nper-class F1 on honest OOF, reweighted to each prior, using the chosen offsets:")
 for k in PRIORS:
-    print(f"  {k:<9}", np.round(f1_score(y, (logp_oof + b).argmax(1), average=None, sample_weight=W[k]), 3))""")
+    print(f"  {k:<9}", np.round(f1_score(y, (logp_oof + b).argmax(1), average=None, sample_weight=W[k]), 3))
+
+# ---- full diagnostics for every mode, so the next submission can be chosen without a re-run ----
+print("\\n" + "=" * 72)
+print("DIAGNOSTICS FOR ALL DECISION MODES")
+print("=" * 72)
+for nm, bb in [('argmax', np.zeros(4)), ('prior_match', b_match),
+               ('tuned', b_tuned), ('blend', 0.5 * (b_match + b_tuned))]:
+    cnts = np.bincount((logp_test + bb).argmax(1), minlength=4)
+    scores = {k: sc(bb, k) for k in PRIORS}
+    print(f"\\n[{nm}] offsets={np.round(bb,3)}")
+    print(f"  avg shift-macro across priors = {np.mean(list(scores.values())):.4f}"
+          f"   ({', '.join(f'{k}={v:.4f}' for k, v in scores.items())})")
+    print(f"  test counts = {cnts}   dist = {np.round(cnts/cnts.sum()*100,2)}")
+    for k in PRIORS:
+        print(f"    per-class F1 [{k:<8}]",
+              np.round(f1_score(y, (logp_oof + bb).argmax(1), average=None, sample_weight=W[k]), 3))""")
 
 add_md("## 5. Predict and submit")
 add_code("""final_preds = (logp_test + b).argmax(1)
